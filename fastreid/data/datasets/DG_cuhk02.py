@@ -31,7 +31,6 @@ class DG_CUHK02(ImageDataset):
 
     def process_train(self, train_path):
 
-
         cam_split = True
 
         data = []

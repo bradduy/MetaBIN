@@ -12,3 +12,4 @@ from .cross_entropy_loss import cross_entropy_loss
 from .focal_loss import focal_loss
 from .triplet_loss import triplet_loss
 from .circle_loss import circle_loss
+from .hsoften_triplet_loss import hsoftenTripletLoss

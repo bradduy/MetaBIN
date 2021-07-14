@@ -117,6 +117,10 @@ class Dataset(object):
                 pids.add(pid)
                 cams.add(camid)
         return len(pids), len(cams)
+        # for _, pid, camid in data:
+        #     pids.add(pid)
+        #     cams.add(camid)
+        # return len(pids), len(cams)
 
     def get_num_pids(self, data):
         """Returns the number of training person identities."""
@@ -161,8 +165,16 @@ class Dataset(object):
 
     def __repr__(self):
         num_train_pids, num_train_cams = self.parse_data(self.train)
+        print('------------------ num_train_pids: ', num_train_pids)
+        print('------------------ num_train_cams: ', num_train_cams)
         num_query_pids, num_query_cams = self.parse_data(self.query)
+        print('*******************************************************')
+        print('------------------ num_query_pids: ', num_train_pids)
+        print('------------------ num_query_cams: ', num_train_cams)
         num_gallery_pids, num_gallery_cams = self.parse_data(self.gallery)
+        print('*******************************************************')
+        print('------------------ num_gallery_pids: ', num_train_pids)
+        print('------------------ num_gallery_cams: ', num_train_cams)
 
         msg = '  ----------------------------------------\n' \
               '  subset   | # ids | # items | # cameras\n' \

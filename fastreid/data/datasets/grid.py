@@ -8,6 +8,10 @@ import os
 from scipy.io import loadmat
 from glob import glob
 
+# from registry import Registry
+
+# DATASET_REGISTRY = Registry("DATASET")
+
 from fastreid.data.datasets import DATASET_REGISTRY
 from fastreid.data.datasets.bases import ImageDataset
 import pdb
@@ -19,7 +23,6 @@ __all__ = ['GRID',]
 class GRID(ImageDataset):
     dataset_dir = "GRID"
     dataset_name = 'grid'
-
     def __init__(self, root='datasets', split_id = 0, **kwargs):
         self.root = root
         self.dataset_dir = os.path.join(self.root, self.dataset_dir)
@@ -43,6 +46,7 @@ class GRID(ImageDataset):
 
         self.prepare_split()
         splits = self.read_json(self.split_path)
+
         if split_id >= len(splits):
             raise ValueError(
                 'split_id exceeds range, received {}, '

@@ -98,6 +98,7 @@ def main(args):
             with PathManager.open(save_file, "r") as f:
                 last_saved = f.read().strip()
             path = os.path.join(cfg.OUTPUT_DIR, last_saved)
+            path = './logs/Sample/DG-mobilenet/eval_this.pth'
             Checkpointer(model).load(path)
             logger.info("load: {}".format(path))
 
@@ -107,7 +108,6 @@ def main(args):
             Checkpointer(model).load(list_pth[args.num_pth-1])
             logger.info("load pth number: {}".format(args.num_pth-1))
             logger.info("load: {}".format(list_pth[args.num_pth-1]))
-
 
         if args.eval_only:
             res = Trainer.test(cfg, model)

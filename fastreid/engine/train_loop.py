@@ -528,6 +528,7 @@ class SimpleTrainer(TrainerBase):
                     self.data_time_all += data_time
                     data_mtrain = data[0]
                     data_mtest = data[1]
+
                 else:
                     data_mtrain, data_time = self.get_data(self._data_loader_iter_mtrain, list_sample=list_mtrain)
                     self.data_time_all += data_time
@@ -745,7 +746,6 @@ class SimpleTrainer(TrainerBase):
                             else:
                                 t_logical_domain += domain_idx == sample
                             cnt += 1
-
                         # data1
                         if int(sum(t_logical_domain)) == 0:
                             data = None

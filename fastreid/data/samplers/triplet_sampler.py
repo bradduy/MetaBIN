@@ -234,7 +234,7 @@ class DomainSuffleSampler(Sampler):
 
             domainid = info[3]['domains']
             if cfg.DATALOADER.CAMERA_TO_DOMAIN:
-                pid = info[1] + str(domainid)
+                pid = str(info[1]) + str(domainid)
             else:
                 pid = info[1]
             self.index_pid[index] = pid

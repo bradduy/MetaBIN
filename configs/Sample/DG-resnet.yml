@@ -24,22 +24,21 @@ MODEL:
   HEADS:
     IN_FEAT: 2048 # ResNet(18,34) 512 , Resnet(50) 2048, Mobilenet w1.0 1280, w1.4 1792
   LOSSES:
-    NAME: ("CrossEntropyLoss","TripletLoss",) 
+    NAME: ("CrossEntropyLoss", "TripletLoss", ) #"HSoftenTripletLoss"
   NORM:
     TYPE_BACKBONE: "BIN_gate2" # "BN", "IN", "BIN_half", "BIN_gate1" (original), "BIN_gate2" (MetaBIN)
 
 DATASETS:
-  NAMES: ("DG_CUHK02", "DG_CUHK03_detected", "DG_Market1501", "DG_DukeMTMC", "DG_CUHK_SYSU",)
-#  NAMES: ("Market1501",) # "Market1501", "DukeMTMC", "MSMT17"
-  TESTS: ("ALL_GRID", "ALL_VIPER_only_10", "ALL_PRID", "ALL_iLIDS", ) 
+  NAMES: ("DG_Celeb", "DG_Celeb_1_1", "DG_Celeb_1_2", "DG_Celeb_1_3", "DG_Celeb_2_1", "DG_Celeb_2_2")
+  TESTS: ("Celeb",) 
 
 DATALOADER:
-  CAMERA_TO_DOMAIN: False # True when market (6), Duke (8), MSMT (15), False when DG
-  NUM_INSTANCE: 4
+  CAMERA_TO_DOMAIN: True # True when market (6), Duke (8), MSMT (15), False when DG
+  NUM_INSTANCE: 9
 
 SOLVER:
-  BASE_LR: 0.01
-  MAX_ITER: 100 
+  BASE_LR: 0.015
+  MAX_ITER: 1000 
   STEPS: [40, 70] 
   IMS_PER_BATCH: 80 
   WRITE_PERIOD: 1000

@@ -28,17 +28,17 @@ MODEL:
   HEADS:
     IN_FEAT: 2048 # ResNet(18,34) 512 , Resnet(50) 2048, Mobilenet w1.0 1280, w1.4 1792
   LOSSES:
-    NAME: ("CrossEntropyLoss","TripletLoss",) 
+    NAME: ("CrossEntropyLoss", "HSoftenTripletLoss","TripletLoss", ) #TripletLoss
   NORM:
     TYPE_BACKBONE: "BIN_gate2" # "BN", "IN", "BIN_half", "BIN_gate1" (original), "BIN_gate2" (MetaBIN)
 
 DATASETS:
-  NAMES: ("DukeMTMC",) 
-  TESTS: ("Market1501", "DukeMTMC",)
+  NAMES: ("DG_Celeb",)
+  TESTS: ("Celeb",) 
 
 DATALOADER:
   CAMERA_TO_DOMAIN: True # True when market (6), Duke (8), MSMT (15), False when DG
-  NUM_INSTANCE: 4
+  NUM_INSTANCE: 9
 
 SOLVER:
   BASE_LR: 0.01

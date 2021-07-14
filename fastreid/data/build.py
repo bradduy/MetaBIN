@@ -305,7 +305,9 @@ def fast_batch_collator(batched_inputs):
         return out
 
     elif isinstance(elem, container_abcs.Mapping):
-        return {key: fast_batch_collator([d[key] for d in batched_inputs]) for key in elem}
+        a = {key: fast_batch_collator([d[key] for d in batched_inputs]) for key in elem}
+        
+        return a
 
     elif isinstance(elem, float):
         return torch.tensor(batched_inputs, dtype=torch.float64)

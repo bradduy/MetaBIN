@@ -8,6 +8,7 @@ import os
 from scipy.io import loadmat
 from glob import glob
 import random
+
 from fastreid.data.datasets import DATASET_REGISTRY
 from fastreid.data.datasets.bases import ImageDataset
 import pdb

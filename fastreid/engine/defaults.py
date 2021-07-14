@@ -630,6 +630,40 @@ class DefaultTrainer(SimpleTrainer):
                 dataset_name_local = 'DG_iLIDS'
                 sub_name = int(dataset_name.split('_')[-1])
                 flag_test = True
+                
+            #########################################################
+            ###################CELEB################################## 
+            elif 'Celeb' in dataset_name:  
+                dataset_name_local = 'DG_Celeb'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
+            elif 'Celeb_1_1' in dataset_name:  
+                dataset_name_local = 'DG_Celeb_1_1'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
+            elif 'Celeb_1_2' in dataset_name:  
+                dataset_name_local = 'DG_Celeb_1_2'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
+            elif 'Celeb_1_3' in dataset_name:  
+                dataset_name_local = 'DG_Celeb_1_3'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
+            elif 'Celeb_2_1' in dataset_name:  
+                dataset_name_local = 'DG_Celeb_2_1'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
+            elif 'Celeb_2_2' in dataset_name:  
+                dataset_name_local = 'DG_Celeb_2_2'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True   
+            #########################################################
+
+
+            elif 'CelebLight' in dataset_name:
+                dataset_name_local = 'DG_CelebLight'
+                sub_name = int(dataset_name.split('_')[-1])
+                flag_test = True
 
             elif 'CUHK02' in dataset_name:  # 7264 images (1816 IDs) -> A IDs x 4 images
                 dataset_name_local = 'DG_CUHK02'
@@ -647,6 +681,19 @@ class DefaultTrainer(SimpleTrainer):
                 dataset_name_local = 'DG_DukeMTMC'
                 sub_name = None
                 flag_test = False
+
+            elif 'Celeb' in dataset_name:
+                dataset_name_local = 'Celeb'
+                sub_name = None
+                flag_test = False
+
+
+            elif 'CelebLight' in dataset_name:  # 36411 images (1812 IDs) -> A IDs x 20 images
+                dataset_name_local = 'CelebLight'
+                sub_name = None
+                flag_test = False
+
+
             elif 'CUHK_SYSU' in dataset_name:  # 34574 images (11934 IDs) -> A IDs x 3 images
                 dataset_name_local = 'DG_CUHK_SYSU'
                 sub_name = None
@@ -688,21 +735,25 @@ class DefaultTrainer(SimpleTrainer):
             plt.close('all')
 
 
-        all_dataset_row = ["GRID", "VIPER", "PRID", "iLIDS"]
-        all_dataset_col = ["GRID", "VIPER", "PRID", "iLIDS", "CUHK02", "CUHK03_detected", "Market1501", "DukeMTMC", "CUHK_SYSU"]
-        index_col = [1,1,1,1,0,0,0,0,0]
+        all_dataset_row = ["GRID", "VIPER", "PRID", "iLIDS", "Celeb", 
+        "Celeb_1_1","Celeb_1_2", "Celeb_1_3", "Celeb_2_1","Celeb_2_2",
+        "CelebLight"]
+        all_dataset_col = ["GRID", "VIPER", "PRID", "iLIDS", "Celeb", 
+        "Celeb_1_1","Celeb_1_2", "Celeb_1_3", "Celeb_2_1","Celeb_2_2",
+        "CelebLight", "CUHK02", "CUHK03_detected", "Market1501", "DukeMTMC", "CUHK_SYSU"]
+        index_col = [1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0]
 
         viper_style = 'a'
         test_set = 1
 
         for i, name in enumerate(all_dataset_row):
-            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name):
+            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name) or ('Celeb' in name) or ('CelebLight' in name):
                 all_dataset_row[i] = all_dataset_row[i] + '_' + str(test_set)
             if 'VIPER' in name:
                 all_dataset_row[i] = all_dataset_row[i] + '_' + str(test_set) + viper_style
 
         for i, name in enumerate(all_dataset_col):
-            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name):
+            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name) or ('Celeb' in name) or ('Celeb_1_1' in name) or ('Celeb_1_2' in name) or ('Celeb_1_3' in name) or ('Celeb_2_2' in name) or ('Celeb_2_1' in name) or ('CelebLight' in name):
                 all_dataset_col[i] = all_dataset_col[i] + '_' + str(test_set)
             if 'VIPER' in name:
                 all_dataset_col[i] = all_dataset_col[i] + '_' + str(test_set) + viper_style
@@ -935,8 +986,8 @@ class DefaultTrainer(SimpleTrainer):
             plt.close('all')
 
 
-        # all_dataset = ["CUHK02", "CUHK03_detected", "Market1501", "DukeMTMC", "CUHK_SYSU", "GRID", "VIPER", "PRID", "iLIDS"]
-        all_dataset_ori = ["GRID", "VIPER", "PRID", "iLIDS"]
+        all_dataset = ["CUHK02", "CUHK03_detected", "Market1501", "DukeMTMC", "CUHK_SYSU", "GRID", "VIPER", "PRID", "iLIDS", "Celeb", "CelebLight"]
+        all_dataset_ori = ["GRID", "VIPER", "PRID", "iLIDS", "Celeb", "CelebLight"]
         viper_style = 'a'
         num_test = 9
         only_all = True
@@ -956,7 +1007,7 @@ class DefaultTrainer(SimpleTrainer):
 
                 all_dataset = copy.deepcopy(all_dataset_ori)
                 for i, name in enumerate(all_dataset_ori):
-                    if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name):
+                    if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name) or ('Celeb' in name) or ('CelebLight' in name):
                         all_dataset[i] = all_dataset[i] + '_' + str(test_set)
                     if 'VIPER' in name:
                         all_dataset[i] = all_dataset[i] + '_' + str(test_set) + viper_style
@@ -982,6 +1033,10 @@ class DefaultTrainer(SimpleTrainer):
                         dataset_name_local = 'DG_iLIDS'
                         sub_name = int(dataset_name.split('_')[-1])
                         flag_test = True
+                    elif 'Celeb' in dataset_name: # 60+60 images (60 IDs) -> 60 IDs x 2 images
+                        dataset_name_local = 'Celeb'
+                        sub_name = int(dataset_name.split('_')[-1])
+                        flag_test = True
 
                     elif 'CUHK02' in dataset_name: # 7264 images (1816 IDs) -> A IDs x 4 images
                         dataset_name_local = 'DG_CUHK02'
@@ -1001,6 +1056,14 @@ class DefaultTrainer(SimpleTrainer):
                         flag_test = False
                     elif 'CUHK_SYSU' in dataset_name: # 34574 images (11934 IDs) -> A IDs x 3 images
                         dataset_name_local = 'DG_CUHK_SYSU'
+                        sub_name = None
+                        flag_test = False
+                    elif 'Celeb' in dataset_name:
+                        dataset_name_local = 'DG_Celeb'
+                        sub_name = None
+                        flag_test = False
+                    elif 'CelebLight' in dataset_name:
+                        dataset_name_local = 'DG_CelebLight'
                         sub_name = None
                         flag_test = False
                     #
@@ -1189,7 +1252,7 @@ class DefaultTrainer(SimpleTrainer):
         test_set = 2
         viper_style = 'a'
         for i, name in enumerate(all_dataset):
-            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name):
+            if ('GRID' in name) or ('PRID' in name) or ('iLIDS' in name)  or ('Celeb' in name)  or ('CelebLight' in name):
                 all_dataset[i] = all_dataset[i] + '_' + str(test_set)
             if 'VIPER' in name:
                 all_dataset[i] = all_dataset[i] + '_' + str(test_set) + viper_style
@@ -1353,6 +1416,8 @@ class DefaultTrainer(SimpleTrainer):
                         "VIPER",
                         "PRID",
                         "iLIDS",
+                        "Celeb",
+                        "CelebLight"
                     )
 
 
@@ -1417,6 +1482,15 @@ class DefaultTrainer(SimpleTrainer):
                         sub_name = int(dataset_name.split('_')[-1])
                         flag_test = True
 
+                    elif 'Celeb' in dataset_name: # 60+60 images (60 IDs) -> 60 IDs x 2 images
+                        dataset_name_local = 'DG_Celeb'
+                        sub_name = int(dataset_name.split('_')[-1])
+                        flag_test = True
+                    elif 'CelebLight' in dataset_name: # 60+60 images (60 IDs) -> 60 IDs x 2 images
+                        dataset_name_local = 'DG_CelebLight'
+                        sub_name = int(dataset_name.split('_')[-1])
+                        flag_test = True
+
                     elif 'CUHK02' in dataset_name: # 7264 images (1816 IDs) -> A IDs x 4 images
                         dataset_name_local = 'DG_CUHK02'
                         sub_name = None
@@ -1435,6 +1509,15 @@ class DefaultTrainer(SimpleTrainer):
                         flag_test = False
                     elif 'CUHK_SYSU' in dataset_name: # 34574 images (11934 IDs) -> A IDs x 3 images
                         dataset_name_local = 'DG_CUHK_SYSU'
+                        sub_name = None
+                        flag_test = False
+
+                    elif 'Celeb' in dataset_name: # 34574 images (11934 IDs) -> A IDs x 3 images
+                        dataset_name_local = 'DG_Celeb'
+                        sub_name = None
+                        flag_test = False
+                    elif 'CelebLight' in dataset_name: # 34574 images (11934 IDs) -> A IDs x 3 images
+                        dataset_name_local = 'DG_CelebLight'
                         sub_name = None
                         flag_test = False
 
@@ -1745,6 +1828,12 @@ class DefaultTrainer(SimpleTrainer):
                     sub_name = [x for x in range(10)]
                 elif 'iLIDS' in dataset_name:
                     dataset_name_local = 'DG_iLIDS'
+                    sub_name = [x for x in range(10)]
+                elif 'Celeb' in dataset_name:
+                    dataset_name_local = 'DG_Celeb'
+                    sub_name = [x for x in range(10)]
+                elif 'CelebLight' in dataset_name:
+                    dataset_name_local = 'DG_CelebLight'
                     sub_name = [x for x in range(10)]
 
 

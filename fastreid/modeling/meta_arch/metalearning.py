@@ -159,6 +159,16 @@ class Metalearning(nn.Module):
             ) * self._cfg.MODEL.LOSSES.TRI.SCALE
 
 
+        if "HSoftenTripletLoss" in loss_names:
+            loss_dict['loss_hsoft_triplet'] = hsoftenTripletLoss(
+                pooled_features if self._cfg.MODEL.LOSSES.TRI.FEAT_ORDER == 'before' else bn_features,
+                gt_labels,
+                self._cfg.MODEL.LOSSES.TRI.MARGIN,
+                True,
+                True
+            ) * self._cfg.MODEL.LOSSES.TRI.SCALE
+
+
         if "TripletLoss_add" in loss_names:
             loss_dict['loss_triplet_add'] = triplet_loss(
                 pooled_features if self._cfg.MODEL.LOSSES.TRI_ADD.FEAT_ORDER == 'before' else bn_features,

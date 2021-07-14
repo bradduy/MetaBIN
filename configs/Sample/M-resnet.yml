@@ -22,7 +22,7 @@ META:
 MODEL:
   BACKBONE:
     NAME: "build_resnet_backbone" # "build_resnet_backbone", "build_mobilenet_v2_backbone"
-    DEPTH: 50 # ResNet->18,34,50,101,152, Mobilenet->10,14
+    DEPTH: 101 # ResNet->18,34,50,101,152, Mobilenet->10,14
     PRETRAIN: True
     PRETRAIN_PATH: '' # 'pretrained/mobilenetv2_1.0.pth' or 'pretrained/mobilenetv2_1.4.pth' or ''
   HEADS:
@@ -33,12 +33,12 @@ MODEL:
     TYPE_BACKBONE: "BIN_gate2" # "BN", "IN", "BIN_half", "BIN_gate1" (original), "BIN_gate2" (MetaBIN)
 
 DATASETS:
-  NAMES: ("Market1501",) 
-  TESTS: ("Market1501", "DukeMTMC",)
+  NAMES: ("DG_Celeb",)
+  TESTS: ("Celeb",) 
 
 DATALOADER:
   CAMERA_TO_DOMAIN: True # True when market (6), Duke (8), MSMT (15), False when DG
-  NUM_INSTANCE: 4
+  NUM_INSTANCE: 9
 
 SOLVER:
   BASE_LR: 0.01

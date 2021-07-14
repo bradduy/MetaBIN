@@ -65,6 +65,7 @@ class Market1501(ImageDataset):
         train = self.process_dir(self.train_dir)
         query = self.process_dir(self.query_dir, is_train=False)
         gallery = self.process_dir(self.gallery_dir, is_train=False)
+
         if self.market1501_500k:
             gallery += self.process_dir(self.extra_gallery_dir, is_train=False)
 
@@ -73,7 +74,6 @@ class Market1501(ImageDataset):
     def process_dir(self, dir_path, is_train=True):
         img_paths = glob.glob(osp.join(dir_path, '*.jpg'))
         pattern = re.compile(r'([-\d]+)_c(\d)')
-
         data = []
         for img_path in img_paths:
             pid, camid = map(int, pattern.search(img_path).groups())

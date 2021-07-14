@@ -201,8 +201,8 @@ class MGN(nn.Module):
 
         # Log prediction accuracy
         CrossEntropyLoss.log_accuracy(pred_class_logits.detach(), gt_labels)
-
         if "CrossEntropyLoss" in loss_names:
+            print('---------------------- CrossEntropyLoss')
             loss_dict['loss_cls_b1'] = CrossEntropyLoss(self._cfg)(b1_logits, gt_labels)
             loss_dict['loss_cls_b2'] = CrossEntropyLoss(self._cfg)(b2_logits, gt_labels)
             loss_dict['loss_cls_b21'] = CrossEntropyLoss(self._cfg)(b21_logits, gt_labels)
@@ -213,6 +213,7 @@ class MGN(nn.Module):
             loss_dict['loss_cls_b33'] = CrossEntropyLoss(self._cfg)(b33_logits, gt_labels)
 
         if "TripletLoss" in loss_names:
+            print('---------------------- TripletLoss')
             loss_dict['loss_triplet_b1'] = TripletLoss(self._cfg)(b1_pool_feat, gt_labels)
             loss_dict['loss_triplet_b2'] = TripletLoss(self._cfg)(b2_pool_feat, gt_labels)
             loss_dict['loss_triplet_b3'] = TripletLoss(self._cfg)(b3_pool_feat, gt_labels)

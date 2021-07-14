@@ -21,6 +21,18 @@ from .DG_cuhk03_labeled import DG_CUHK03_labeled
 from .DG_cuhk03_detected import DG_CUHK03_detected
 from .dukemtmcreid import DukeMTMC
 from .DG_dukemtmcreid import DG_DukeMTMC
+
+from .DG_Celeb import DG_Celeb
+from .DG_Celeb_1_1 import DG_Celeb_1_1
+from .DG_Celeb_1_2 import DG_Celeb_1_2
+from .DG_Celeb_1_3 import DG_Celeb_1_3
+from .DG_Celeb_2_1 import DG_Celeb_2_1
+from .DG_Celeb_2_2 import DG_Celeb_2_2
+
+from .DG_CelebLight import DG_CelebLight
+from .Celeb import Celeb
+from .CelebLight import CelebLight
+
 from .market1501 import Market1501
 from .DG_market1501 import DG_Market1501
 from .msmt17 import MSMT17
