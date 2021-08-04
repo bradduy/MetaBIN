@@ -54,11 +54,11 @@ class Metalearning(nn.Module):
         return self.pixel_mean.device
 
     def forward(self, batched_inputs, opt = None):
-        # A = Variable(self.origin)
-        # A_id1, A_id2, self.id_score = self.net_E(A[:bs//2], A[bs//2:])
-        # A_id = torch.cat((A_id1, A_id2))
+        A = Variable(self.origin)
+        A_id1, A_id2, self.id_score = self.net_E(A[:bs//2], A[bs//2:])
+        A_id = torch.cat((A_id1, A_id2))
         if self.training:
-            images = self.preprocess_image(batched_inputs)
+            images = A_id #self.preprocess_image(batched_inputs)
 
 
             outs = dict()
