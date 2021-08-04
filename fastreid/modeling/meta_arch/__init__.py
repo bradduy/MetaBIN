@@ -11,3 +11,5 @@ from .build import META_ARCH_REGISTRY, build_model
 from .baseline import Baseline
 from .mgn import MGN
 from .metalearning import Metalearning
+from .embedding import EltwiseSubEmbed
+from .multi_branch import SiameseNet

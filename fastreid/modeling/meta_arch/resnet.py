@@ -20,8 +20,7 @@ from fastreid.layers import (
     Non_local,
 )
 from fastreid.utils.checkpoint import get_missing_parameters_message, get_unexpected_parameters_message
-from .build import BACKBONE_REGISTRY
-from .en_decoder import Encoder, Decoder
+from fastreid.modeling.backbones.build import BACKBONE_REGISTRY
 
 logger = logging.getLogger(__name__)
 model_urls = {
@@ -268,7 +267,7 @@ class ResNet(nn.Module):
 
 
 @BACKBONE_REGISTRY.register()
-def build_resnet_backbone(cfg):
+def build_resnet_backbone_FDGAN(cfg):
     """
     Create a ResNet instance from config.
     Returns:

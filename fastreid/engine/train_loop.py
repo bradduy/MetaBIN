@@ -23,6 +23,7 @@ from collections import Counter
 from torch.autograd import Variable
 
 from fastreid.utils.weight_init import weights_init_kaiming, weights_init_classifier
+from fastreid.modeling.meta_arch.metalearning import Metalearning
 
 __all__ = ["HookBase", "TrainerBase", "SimpleTrainer"]
 
@@ -166,15 +167,23 @@ class TrainerBase:
 class SimpleTrainer(TrainerBase):
     def __init__(self, cfg, model, data_loader, data_loader_add, optimizer_main, optimizer_norm, meta_param):
         super().__init__()
-        self.model = model
+        self.model: Metalearning = model
         self.data_loader = data_loader
-
+        # model.set_input(data_loader)
         if isinstance(data_loader, list):
             self._data_loader_iter = []
             for x in data_loader:
                 self._data_loader_iter.append(iter(x))
         else:
             self._data_loader_iter = iter(data_loader)
+            pid_pair = []
+            for data in data_loader:
+                for i in data['img_path']:
+                    pid, camid, _ = i.split("/")[-1][:-4].split("_")   
+                    # pid = str(pid) + str(camid)                        
+                    if len(pid_pair) < 2:                  
+                        pid_pair.append(pid)
+                model.set_input(pid_pair)
 
         self.optimizer_main = optimizer_main
         self.optimizer_norm = optimizer_norm
@@ -254,7 +263,6 @@ class SimpleTrainer(TrainerBase):
                     if val['raw_name'] + '.bias' == g['name']:
                         self.all_layers[name]['b_param_idx'] = i
                 if self.optimizer_norm != None:
-                    for i, g in enumerate(self.optimizer_norm.param_groups):
                         if val['raw_name'] + '.gate' == g['name']:
                             self.all_layers[name]['g_param_idx'] = i
 

@@ -14,7 +14,9 @@ from fastreid.modeling.ops import TaskNormI
 # from fastreid.modeling.losses.utils import log_accuracy
 from .build import META_ARCH_REGISTRY
 import copy
-
+from fastreid.modeling.meta_arch.multi_branch import SiameseNet
+from fastreid.modeling.meta_arch.embedding import EltwiseSubEmbed
+from torch.autograd import Variable
 
 @META_ARCH_REGISTRY.register()
 class Metalearning(nn.Module):
@@ -29,23 +31,32 @@ class Metalearning(nn.Module):
         assert len(cfg.MODEL.PIXEL_MEAN) == len(cfg.MODEL.PIXEL_STD)
         self.register_buffer("pixel_mean", torch.tensor(cfg.MODEL.PIXEL_MEAN).view(1, -1, 1, 1))
         self.register_buffer("pixel_std", torch.tensor(cfg.MODEL.PIXEL_STD).view(1, -1, 1, 1))
+        
+        ##############################
+        # Encoder part
+        e_base_model = build_reid_heads(cfg) #create('50', cut_at_pooling=True) 
+        e_embed_model = EltwiseSubEmbed(use_batch_norm=True, use_classifier=True, num_features=2048, num_classes=2)
+        self.net_E = SiameseNet(e_base_model, e_embed_model)
+        # _load_state_dict(self.net_E, cfg.netE_pretrain)
+        self.net_E = torch.nn.DataParallel(self.net_E).cuda()
+        ##############################
 
         # backbone
         self.backbone = build_backbone(cfg) # resnet or mobilenet
-
         if self._cfg.MODEL.NORM.TYPE_BACKBONE == 'Task_norm':
             for module in self.backbone.modules():
                 if isinstance(module, TaskNormI):
                     module.register_extra_weights()
-
-
         self.heads = build_reid_heads(cfg)
-
+        
     @property
     def device(self):
         return self.pixel_mean.device
 
     def forward(self, batched_inputs, opt = None):
+        # A = Variable(self.origin)
+        # A_id1, A_id2, self.id_score = self.net_E(A[:bs//2], A[bs//2:])
+        # A_id = torch.cat((A_id1, A_id2))
         if self.training:
             images = self.preprocess_image(batched_inputs)
 
@@ -222,3 +233,26 @@ class Metalearning(nn.Module):
             ) * self._cfg.MODEL.LOSSES.CIRCLE.SCALE
 
         return loss_dict
+
+
+    def set_input(self, input):
+        input1, input2 = input
+        labels = (input1['pid']==input2['pid']).long()
+        noise = torch.randn(labels.size(0), self.opt.noise_feature_size)
+
+        # keep the same pose map for persons with the same identity
+        mask = labels.view(-1,1,1,1).expand_as(input1['posemap'])
+        input2['posemap'] = input1['posemap']*mask.float() + input2['posemap']*(1-mask.float())
+        mask = labels.view(-1,1,1,1).expand_as(input1['target'])
+        input2['target'] = input1['target']*mask.float() + input2['target']*(1-mask.float())
+
+        origin = torch.cat([input1['origin'], input2['origin']])
+        target = torch.cat([input1['target'], input2['target']])
+        posemap = torch.cat([input1['posemap'], input2['posemap']])
+        noise = torch.cat((noise, noise))
+
+        self.origin = origin.cuda()
+        self.target = target.cuda()
+        self.posemap = posemap.cuda()
+        self.labels = labels.cuda()
+        self.noise = noise.cuda()

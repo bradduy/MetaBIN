@@ -79,8 +79,8 @@ class meta_linear(nn.Linear):
         if opt != None:
             use_meta_learning = False
             if opt['param_update']:
-                if self.weight is not None:
-                    if self.compute_meta_params:
+                if self.weight is not None:        
+                    if self.compute_meta_params:           
                         use_meta_learning = True
         else:
             use_meta_learning = False

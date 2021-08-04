@@ -24,5 +24,6 @@ def build_backbone(cfg):
     """
 
     backbone_name = cfg.MODEL.BACKBONE.NAME
+    print('------DUYYYYYYYYY----backbone: ', backbone_name)
     backbone = BACKBONE_REGISTRY.get(backbone_name)(cfg)
     return backbone
